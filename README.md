@@ -38,3 +38,53 @@
 ![01](https://user-images.githubusercontent.com/90519017/198081442-f063c8f9-0c5b-438c-a052-04b473991b55.png)
 
 ### 4. Фрагменты кода
+
+Код главной страницы и проверка есть ли куки:
+```php
+<?php
+session_start();
+
+if(!isset($_SESSION['auth'])){
+    header('Location: login.php');
+    exit;
+} else {
+    echo '<p class="success">Приветствую тебя, ', $_SESSION['name'], '!</p>';
+}
+
+?>
+```
+
+Код генерации соли:
+```php
+<?php
+function generateSalt()
+{
+    $salt = '';
+    $saltLength = 8;
+    for($i=0; $i<$saltLength; $i++) {
+        $salt .= chr(mt_rand(33,126));
+    }
+    return $salt;
+}
+?>
+```
+
+Код создания хешированого + посоленого пароля:
+```php
+$saltedPassword = md5(md5(md5(md5($password).$salt)).$salt);
+```
+
+Код создания сессии если пароль верен (при авторизации):
+```php
+if ($result['password'] == $saltedPassword) {
+
+          session_start();
+
+          $_SESSION['auth'] = true;
+          $_SESSION['id'] = $result['id_user'];
+          $_SESSION['login'] = $result['login'];
+          $_SESSION['name'] = $result['name'];
+ ```
+### 5. Примечания
+
+* ### Сессия активна в течении 24 часов.
