@@ -85,6 +85,6 @@ if ($result['password'] == $saltedPassword) {
           $_SESSION['login'] = $result['login'];
           $_SESSION['name'] = $result['name'];
  ```
-### 5. Примечания
+## Примечания
 
 * ### Сессия активна в течении 24 часов.
